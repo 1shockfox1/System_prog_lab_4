@@ -3,7 +3,7 @@
 public class TimeService : IHostedService, IDisposable
 {
     private readonly IHubContext<ClockHub> _hubContext;
-    private System.Timers.Timer _timer; // Явно указываем System.Timers.Timer
+    private System.Timers.Timer _timer; 
 
     public TimeService(IHubContext<ClockHub> hubContext)
     {
@@ -12,7 +12,7 @@ public class TimeService : IHostedService, IDisposable
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        _timer = new System.Timers.Timer(500); // Явно указываем System.Timers.Timer
+        _timer = new System.Timers.Timer(500);
         _timer.Elapsed += async (s, e) =>
             await _hubContext.Clients.All.SendAsync("ReceiveTime", DateTime.Now.ToString("HH:mm:ss.fff"));
         _timer.Start();
